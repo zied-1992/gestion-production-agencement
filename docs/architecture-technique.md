@@ -69,7 +69,13 @@ La stratégie détaillée de résolution des conflits doit être définie et tes
 
 Un PIN ou la biométrie peuvent faciliter le déverrouillage local, mais ne remplacent pas l'authentification et l'autorisation côté serveur.
 
-## 7. Technologies envisagées
+## 7. Unités et dimensions
+
+Les dimensions des produits sont saisies et stockées en centimètres (cm) : longueur, largeur et hauteur. Les valeurs décimales sont autorisées si nécessaire. L'interface doit afficher explicitement l'unité cm.
+
+Le planning porte uniquement sur les dates de début et de livraison prévues des projets ; aucune date n'est gérée au niveau des opérations.
+
+## 8. Technologies envisagées
 
 | Couche | Orientation initiale |
 |---|---|
@@ -84,7 +90,7 @@ Un PIN ou la biométrie peuvent faciliter le déverrouillage local, mais ne remp
 
 Aucun fournisseur de backend ou de synchronisation n'est encore sélectionné.
 
-## 8. Prototype technique à réaliser avant le développement complet
+## 9. Prototype technique à réaliser avant le développement complet
 
 Le prototype devra démontrer les scénarios suivants :
 
@@ -99,7 +105,7 @@ Le prototype devra démontrer les scénarios suivants :
 7. Un opérateur tente une correction interdite : le serveur la refuse.
 8. Un responsable corrige une saisie : la trace d'audit est conservée.
 
-## 9. Décisions restant à prendre
+## 10. Décisions restant à prendre
 
 - Fournisseur backend et hébergement.
 - Moteur de synchronisation offline-first.
@@ -109,6 +115,6 @@ Le prototype devra démontrer les scénarios suivants :
 - Stockage, taille maximale et accès aux photos et documents.
 - Stratégie de sauvegarde et de restauration serveur.
 
-## 10. Règle de conception
+## 11. Règle de conception
 
 Ne pas choisir une technologie uniquement parce qu'elle est facile à démarrer. Le choix doit être validé par un prototype qui prouve le multi-utilisateur, les droits d'accès, la synchronisation hors ligne et la prévention des doublons.
