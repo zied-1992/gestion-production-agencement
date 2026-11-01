@@ -61,12 +61,13 @@ La V1 ne comprend pas : gestion des stocks, matières premières, achats, fourni
 
 ### 3.3 Opérateur
 
-- Consulter tous les projets, produits, quantités prévues et avancements.
-- Voir en priorité les projets en cours.
+- Consulter tous les projets de l'entreprise, y compris ceux auxquels son équipe ne participe pas, ainsi que leurs produits, quantités prévues et avancements.
+- Voir en priorité les projets en cours, sans masquer les autres projets.
 - Consulter les quantités produites et restantes.
-- Ajouter une saisie de production.
+- Ajouter une saisie de production selon les opérations et droits qui lui sont attribués.
 - Consulter son propre historique de saisies.
-- Ne pas modifier ni supprimer une saisie après validation.
+- Ne pas créer, modifier ni supprimer les projets, produits, opérations ou affectations.
+- Ne pas modifier ni supprimer une saisie de production après validation.
 
 Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
 
