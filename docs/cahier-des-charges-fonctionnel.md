@@ -69,7 +69,7 @@ La V1 ne comprend pas : gestion des stocks, matières premières, achats, fourni
 - Ne pas créer, modifier ni supprimer les projets, produits, opérations ou affectations.
 - Ne pas modifier ni supprimer une saisie de production après validation.
 
-Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
+Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. les comptes sont créés par la direction ou le responsable habilité, puis le salarié reçoit un lien ou un code sécurisé d'activation et définit lui-même son mot de passe lors de sa première connexion. Le responsable ne connaît pas ce mot de passe. Le canal d'envoi de l'invitation reste à définir. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
 
 ### 3.4 Authentification
 
