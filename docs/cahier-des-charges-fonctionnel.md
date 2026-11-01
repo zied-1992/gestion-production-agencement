@@ -313,7 +313,7 @@ La messagerie et les notifications push nécessitent une connexion. La stratégi
 - Sauvegardes automatiques côté serveur.
 - Aucun mécanisme de sauvegarde/restauration manuelle par l'utilisateur en V1.
 
-Les durées de conservation, les règles de suppression des comptes et la politique de confidentialité devront être définies avant mise en production.
+Les messages sont conservés sans limite de durée jusqu'à suppression manuelle. Lorsqu'un utilisateur quitte l'entreprise, son compte est désactivé sans effacer ses messages ni ses anciennes saisies ; son nom reste conservé dans l'historique. La politique de confidentialité et les règles de traitement des données personnelles devront être définies avant mise en production.
 
 ## 18. Architecture technique envisagée
 
@@ -340,7 +340,7 @@ Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
 5. **Rapports – décision prise :** génération uniquement à la demande ; aucun rapport périodique n'est envoyé automatiquement.
 6. **Notifications – décision partielle prise :** une nouvelle saisie de production notifie tous les utilisateurs concernés par le projet. Les règles précises permettant d'identifier ces utilisateurs restent à définir.
-7. **Messagerie – décision partielle prise :** seuls la direction et le responsable de production peuvent créer des groupes. La conservation des messages est sans limite de durée, jusqu'à suppression manuelle. Chaque utilisateur peut supprimer ses propres messages ; la Direction peut supprimer tous les messages.
+7. **Messagerie – décision partielle prise :** seuls la direction et le responsable de production peuvent créer des groupes. La conservation des messages est sans limite de durée, jusqu'à suppression manuelle. Chaque utilisateur peut supprimer ses propres messages ; la Direction peut supprimer tous les messages. Lorsqu'un utilisateur quitte l'entreprise, son compte est désactivé, mais ses messages restent visibles et son nom est conservé dans l'historique.
 8. **Hors ligne :** quelles fonctions doivent être intégralement disponibles hors ligne et quelle règle appliquer en cas de conflit ?
 9. **Comptes :** quelles règles pour le PIN, la récupération et la désactivation d'un compte ?
 10. **Assistant IA :** quel fournisseur, quelles limites de coût et quelles règles de confidentialité ?
