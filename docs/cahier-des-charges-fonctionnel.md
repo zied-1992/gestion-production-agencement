@@ -73,7 +73,7 @@ Chaque opérateur dispose d'un compte individuel. La création des comptes est r
 
 ### 3.4 Authentification
 
-Connexion par identifiant et mot de passe, avec code PIN prévu pour faciliter l'accès. L'authentification biométrique peut être proposée si l'appareil le permet. Les règles de sécurité du PIN, de récupération du compte et de renouvellement du mot de passe restent à préciser.
+Connexion initiale par identifiant et mot de passe. Après cette première connexion, l'utilisateur peut choisir l'authentification biométrique (empreinte digitale ou reconnaissance faciale) si son appareil la prend en charge. Un code PIN sert de solution de secours lorsque la biométrie n'est pas disponible ou ne fonctionne pas. Le mot de passe reste disponible pour réauthentification et récupération selon les règles de sécurité. Les règles de sécurité du PIN, de récupération du compte et de renouvellement du mot de passe restent à préciser.
 
 ## 4. Gestion des projets
 
