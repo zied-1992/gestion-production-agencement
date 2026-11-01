@@ -207,7 +207,7 @@ La direction ou le responsable habilité peut ajouter, modifier et supprimer des
 - Historique personnel des saisies.
 - Avancement global des projets.
 
-Les tableaux de bord sont personnalisables : choix des indicateurs, ordre et disposition. Les indicateurs globaux ne doivent pas additionner des unités incompatibles. La méthode de calcul d'un avancement global entre plusieurs produits devra être validée avant implémentation.
+Les tableaux de bord sont personnalisables : choix des indicateurs, ordre et disposition. Les indicateurs globaux ne doivent pas additionner des unités incompatibles. L'avancement global du projet est calculé comme la moyenne arithmétique des pourcentages d'avancement de chaque produit. Chaque produit a donc le même poids dans cette moyenne, quelle que soit sa quantité ou son unité. Les pourcentages réels des produits sont utilisés, y compris lorsqu'ils dépassent 100 %.
 
 ## 9. Planning et notifications
 
@@ -335,7 +335,7 @@ Le choix du backend ne doit pas être arrêté avant d'avoir testé le fonctionn
 Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 
 1. **Dépassement de quantité – décision prise :** dépassement autorisé avec avertissement ; conserver la quantité réelle, afficher le taux réel pouvant dépasser 100 % et plafonner la quantité restante à zéro.
-2. **Avancement global :** quelle pondération utiliser pour agréger les avancements de produits et opérations de natures différentes ?
+2. **Avancement global – décision prise :** moyenne arithmétique des pourcentages d'avancement de chaque produit, avec un poids égal pour chaque produit.
 3. **Unités :** quelles unités utiliser pour les dimensions des produits et comment gérer les arrondis ?
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
 5. **Rapports automatiques :** quels jours/heures et quels destinataires ?
