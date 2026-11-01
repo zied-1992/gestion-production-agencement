@@ -69,7 +69,7 @@ La V1 ne comprend pas : gestion des stocks, matières premières, achats, fourni
 - Ne pas créer, modifier ni supprimer les projets, produits, opérations ou affectations.
 - Ne pas modifier ni supprimer une saisie de production après validation.
 
-Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. les comptes sont créés par la direction ou le responsable habilité, puis le salarié reçoit un lien ou un code sécurisé d'activation et définit lui-même son mot de passe lors de sa première connexion. Le responsable ne connaît pas ce mot de passe. Le canal d'envoi de l'invitation reste à définir. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
+Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. Le compte est créé par un responsable habilité, puis le salarié reçoit un lien ou un code sécurisé d'activation et définit lui-même son mot de passe lors de sa première connexion. Le responsable ne connaît pas ce mot de passe. Le canal d'envoi de l'invitation reste à définir. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
 
 ### 3.4 Authentification
 
@@ -108,7 +108,7 @@ Un produit réutilisable peut être créé et ajouté à tout moment. Ses champs
 - Hauteur (cm).
 - Quantité à fabriquer dans le projet.
 
-Le centimètre (cm) est l'unité standard pour toutes les dimensions des produits. Les valeurs décimales sont autorisées si nécessaire.
+Le centimètre (cm) est l'unité standard pour toutes les dimensions des produits. Les valeurs décimales sont autorisées si nécessaire. Pour un nouveau produit ajouté à un projet, la quantité prévue par défaut est de 1 pièce ; le Responsable de production peut la modifier.
 
 ### 5.2 Opérations
 
@@ -215,9 +215,14 @@ Le planning reste simple : seules les dates de début et de livraison prévues d
 
 Notifications prévues en V1 :
 
-- Nouveau message.
-- Nouvelle saisie de production : notification envoyée à tous les utilisateurs concernés par le projet.
-- Projet marqué comme terminé.
+- Nouvelle saisie de production : Direction, Responsable de production et utilisateurs concernés par le projet selon les règles d'affectation et de suivi.
+- Nouveau message privé : destinataire.
+- Nouveau message de groupe : membres du groupe.
+- Nouveau document ou nouvelle photo : utilisateurs concernés et autorisés.
+- Modification importante ou clôture d'un projet : utilisateurs concernés.
+- Invitation à une réunion, modification ou annulation : participants invités.
+
+Chaque utilisateur peut activer ou désactiver les catégories de notifications proposées dans ses préférences. Les notifications sont marquées comme lues ou non lues et restent consultables dans un historique.
 
 Les notifications sont disponibles dans l'application et, lorsque la connexion le permet, sous forme de notifications push. La définition précise des utilisateurs considérés comme « concernés par le projet » reste à préciser.
 
@@ -236,7 +241,7 @@ Génération uniquement à la demande de l'utilisateur, sans envoi automatique p
 
 ### 11.1 Documents de projet
 
-Possibilité d'ajouter plusieurs photos et documents à un projet, notamment des plans et des fichiers PDF. Les documents sont consultables selon les droits de l'utilisateur.
+Possibilité d'ajouter plusieurs photos et documents à un projet, notamment des plans et des fichiers PDF. Les opérateurs peuvent également ajouter des photos et des documents aux projets qu'ils sont autorisés à consulter, même si leur équipe n'est pas affectée au projet. Les photos peuvent être classées par étape : avant fabrication, en fabrication, après fabrication et installation. Chaque fichier conserve automatiquement son auteur, la date et l'heure d'ajout, le projet et son type. Les documents sont consultables selon les droits de l'utilisateur.
 
 ### 11.2 Documents administratifs
 
@@ -248,7 +253,7 @@ La Direction et le Responsable de production définissent, pour chaque document,
 
 ### 12.1 Messagerie
 
-Messagerie interne permettant les conversations privées et les groupes, avec partage de photos et de documents et notification des nouveaux messages. La création des groupes est réservée à la direction et au responsable de production. Les messages et conversations sont conservés sans limite de durée, jusqu'à suppression manuelle. Chaque utilisateur peut supprimer ses propres messages. La Direction peut supprimer tous les messages.
+Messagerie interne permettant les conversations privées et les groupes, avec partage de photos et de documents et notification des nouveaux messages. Une conversation peut être associée à un projet afin de centraliser les échanges liés à celui-ci. La création des groupes est réservée à la direction et au responsable de production. Les messages et conversations sont conservés sans limite de durée, jusqu'à suppression manuelle. Chaque utilisateur peut supprimer ses propres messages. La Direction peut supprimer tous les messages.
 
 ### 12.2 Réunions
 
@@ -260,13 +265,14 @@ Une réunion contient :
 - Compte rendu.
 - Décisions.
 - Actions à réaliser.
-- Responsables des actions.
+- Responsable désigné pour chaque action.
+- État de chaque action : À faire, En cours ou Terminée.
 
-Pas de signature électronique ni de calendrier externe en V1.
+Les actions restent consultables après la réunion pour permettre le suivi de leur réalisation. Pas de signature électronique ni de calendrier externe en V1.
 
 ## 13. Recherche globale
 
-Recherche dans les projets, produits, clients saisis en texte libre, utilisateurs, documents et messages. Filtres par catégorie, date, utilisateur et type de contenu. Les résultats doivent toujours respecter les droits d'accès du compte connecté.
+Recherche globale dans les projets, produits, clients saisis en texte libre, utilisateurs, documents et messages. Filtres par catégorie, date, utilisateur et type de contenu. La recherche est accessible depuis l'application. Les résultats doivent toujours respecter les droits d'accès du compte connecté ; un document non autorisé ne doit pas apparaître dans les résultats.
 
 ## 14. Assistant IA
 
@@ -330,22 +336,18 @@ Orientation initiale, à confirmer après validation d'un prototype :
 
 Le choix du backend ne doit pas être arrêté avant d'avoir testé le fonctionnement hors ligne, la synchronisation, les conflits et les droits d'accès.
 
-## 19. Points à valider avant le développement fonctionnel
+## 19. Points restant à préciser avant ou pendant le développement
 
-Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
+Les décisions déjà prises dans les sections précédentes sont considérées comme validées. Les sujets suivants restent ouverts :
 
-1. **Dépassement de quantité – décision prise :** dépassement autorisé avec avertissement ; conserver la quantité réelle, afficher le taux réel pouvant dépasser 100 % et plafonner la quantité restante à zéro.
-2. **Avancement global – décision prise :** moyenne arithmétique des pourcentages d'avancement de chaque produit, avec un poids égal pour chaque produit.
-3. **Unités :** quelles unités utiliser pour les dimensions des produits et comment gérer les arrondis ?
-4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
-5. **Rapports – décision prise :** génération uniquement à la demande ; aucun rapport périodique n'est envoyé automatiquement.
-6. **Notifications – décision partielle prise :** une nouvelle saisie de production notifie tous les utilisateurs concernés par le projet. Les règles précises permettant d'identifier ces utilisateurs restent à définir.
-7. **Messagerie – décision partielle prise :** seuls la direction et le responsable de production peuvent créer des groupes. La conservation des messages est sans limite de durée, jusqu'à suppression manuelle. Chaque utilisateur peut supprimer ses propres messages ; la Direction peut supprimer tous les messages. Lorsqu'un utilisateur quitte l'entreprise, son compte est désactivé, mais ses messages restent visibles et son nom est conservé dans l'historique.
-8. **Hors ligne :** quelles fonctions doivent être intégralement disponibles hors ligne et quelle règle appliquer en cas de conflit ?
-9. **Comptes :** quelles règles pour le PIN, la récupération et la désactivation d'un compte ?
-10. **Assistant IA :** quel fournisseur, quelles limites de coût et quelles règles de confidentialité ?
-11. **Documents :** quelles limites de taille et quels formats de fichiers accepter ?
-12. **Mise en production :** nom de l'application, identité graphique et comptes de publication Android/iOS.
+1. Canal d'envoi des invitations et règles détaillées de récupération du compte, du PIN et de gestion des appareils perdus.
+2. Définition exacte des utilisateurs « concernés » à notifier pour chaque événement de projet.
+3. Limites de taille, formats autorisés et durée de conservation locale des photos et documents.
+4. Politique détaillée de résolution des conflits de synchronisation, à confirmer par prototype.
+5. Fournisseur backend, hébergement et moteur de synchronisation hors ligne.
+6. Fournisseur IA, coûts, confidentialité et limites d'utilisation.
+7. Nom de l'application, logo et comptes de publication Android/iOS.
+8. Règles de suppression des photos et documents ajoutés par les opérateurs : à confirmer par la Direction.
 
 ## 20. Critères d'acceptation essentiels de la V1
 
@@ -363,3 +365,42 @@ La V1 sera considérée comme fonctionnellement prête lorsque :
 - Les messages et réunions peuvent être gérés selon les permissions.
 - Une saisie hors ligne est conservée puis synchronisée sans doublon.
 - L'assistant IA ne révèle aucune donnée non autorisée et ne modifie aucune donnée.
+
+
+## 21. Décisions complémentaires issues des maquettes d'interface
+
+### 21.1 Navigation et identité visuelle
+- Style visuel de référence : industriel, avec anthracite, orange et blanc.
+- Navigation principale en bas de l'écran : Accueil, Projets, Production, Messages et Menu.
+- L'écran d'accueil met les projets au premier plan ; les statistiques restent secondaires.
+- Thème clair ou sombre sélectionnable manuellement.
+- Les maquettes présentées pendant la conception sont illustratives ; elles ne constituent pas encore des écrans connectés au backend.
+
+### 21.2 Affectation des opérations
+- Le Responsable de production sélectionne une opération, une équipe et un ou plusieurs opérateurs.
+- Un opérateur peut être affecté à plusieurs opérations.
+- L'affectation détermine les droits de saisie de production ; elle ne modifie pas le droit de consultation de tous les projets.
+- L'équipe et les opérateurs affectés sont affichés dans le formulaire de saisie. L'auteur connecté est attribué automatiquement.
+
+### 21.3 Formulaire et historique de production
+- Le formulaire de saisie propose le projet, le produit, l'opération, la date et la quantité ; l'équipe affectée et l'auteur sont renseignés automatiquement lorsque possible.
+- L'historique permet de filtrer les saisies par projet, produit, opération, date, équipe et auteur.
+- L'opérateur consulte son historique sans pouvoir corriger ni supprimer ses saisies.
+- La Direction et le Responsable de production habilité peuvent corriger ou supprimer une saisie avec un motif obligatoire et une trace d'audit.
+
+### 21.4 Tableaux de bord
+- Le tableau de bord Direction présente les projets en cours et terminés, l'avancement global, la production hebdomadaire et mensuelle, ainsi que la liste des projets.
+- Le tableau de bord Responsable de production met en avant les projets en production, les dernières saisies et les quantités produites aujourd'hui et cette semaine.
+- Le tableau de bord opérateur présente les projets en cours, les quantités produites et restantes, son historique et l'avancement global des projets.
+- Les indicateurs de production sont regroupés par unité compatible ; aucune somme entre unités différentes n'est autorisée.
+
+### 21.5 Notifications, conversations et réunions
+- Le centre de notifications distingue les catégories Production, Messages, Photos et documents, et Réunions ; l'utilisateur peut régler ses préférences.
+- Les conversations peuvent être privées, en groupe ou associées à un projet.
+- Le compte rendu de réunion comprend le résumé des discussions, les décisions et les actions, avec un responsable et un statut pour chaque action.
+- Les statuts des actions sont : À faire, En cours et Terminée.
+
+### 21.6 Assistant IA
+- L'assistant est présenté comme un outil d'analyse en langage naturel, en lecture seule.
+- Il peut proposer des questions rapides sur les projets, la production, les équipes et les synthèses périodiques.
+- Toute réponse doit être fondée sur les données disponibles et autorisées ; les réponses doivent signaler les données manquantes ou insuffisantes.
