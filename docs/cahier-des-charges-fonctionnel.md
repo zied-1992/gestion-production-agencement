@@ -68,7 +68,7 @@ La V1 ne comprend pas : gestion des stocks, matières premières, achats, fourni
 - Consulter son propre historique de saisies.
 - Ne pas modifier ni supprimer une saisie après validation.
 
-Chaque opérateur dispose d'un compte individuel. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
+Chaque opérateur dispose d'un compte individuel. La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas créer eux-mêmes leur compte. Un utilisateur peut être connecté sur plusieurs appareils. Une saisie conserve toujours l'identité de son auteur, indépendamment de l'équipe ou des personnes affectées à l'opération.
 
 ### 3.4 Authentification
 
