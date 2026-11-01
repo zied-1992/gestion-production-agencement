@@ -216,10 +216,10 @@ Le planning reste simple : seules les dates de début et de livraison prévues d
 Notifications prévues en V1 :
 
 - Nouveau message.
-- Nouvelle saisie de production.
+- Nouvelle saisie de production : notification envoyée à tous les utilisateurs concernés par le projet.
 - Projet marqué comme terminé.
 
-Les notifications sont disponibles dans l'application et, lorsque la connexion le permet, sous forme de notifications push. Les destinataires exacts dépendent du rôle et restent à définir.
+Les notifications sont disponibles dans l'application et, lorsque la connexion le permet, sous forme de notifications push. La définition précise des utilisateurs considérés comme « concernés par le projet » reste à préciser.
 
 ## 10. Rapports
 
@@ -339,7 +339,7 @@ Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 3. **Unités :** quelles unités utiliser pour les dimensions des produits et comment gérer les arrondis ?
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
 5. **Rapports – décision prise :** génération uniquement à la demande ; aucun rapport périodique n'est envoyé automatiquement.
-6. **Notifications :** quels rôles reçoivent chaque type de notification ?
+6. **Notifications – décision partielle prise :** une nouvelle saisie de production notifie tous les utilisateurs concernés par le projet. Les règles précises permettant d'identifier ces utilisateurs restent à définir.
 7. **Messagerie :** qui peut créer des groupes et quelles sont les règles de conservation/suppression ?
 8. **Hors ligne :** quelles fonctions doivent être intégralement disponibles hors ligne et quelle règle appliquer en cas de conflit ?
 9. **Comptes :** quelles règles pour le PIN, la récupération et la désactivation d'un compte ?
