@@ -97,13 +97,13 @@ Le prototype devra démontrer les scénarios suivants :
 1. Deux téléphones se connectent avec deux comptes différents.
 2. Un opérateur hors ligne peut consulter les projets et les informations de production déjà synchronisées.
 3. Un opérateur hors ligne ne peut pas utiliser les fonctions non prévues pour le mode hors ligne.
-2. Un utilisateur crée une saisie de production en ligne et l'autre la voit après synchronisation.
-3. Un téléphone passe hors ligne et enregistre une saisie.
-4. Le téléphone retrouve la connexion et transmet la saisie une seule fois.
-5. Une même opération est envoyée plusieurs fois à cause d'une coupure réseau : aucun doublon n'est créé.
-6. Deux utilisateurs modifient simultanément une même donnée de projet : le conflit est détecté et traité sans perte silencieuse.
-7. Un opérateur tente une correction interdite : le serveur la refuse.
-8. Un responsable corrige une saisie : la trace d'audit est conservée.
+4. Un utilisateur crée une saisie de production en ligne et l'autre la voit après synchronisation.
+5. Un téléphone passe hors ligne et enregistre une saisie.
+6. Le téléphone retrouve la connexion et transmet la saisie une seule fois.
+7. Une même opération est envoyée plusieurs fois à cause d'une coupure réseau : aucun doublon n'est créé.
+8. Deux utilisateurs modifient simultanément une même donnée de projet : le conflit est détecté et traité sans perte silencieuse.
+9. Un opérateur tente une correction interdite : le serveur la refuse.
+10. Un responsable corrige une saisie : la trace d'audit est conservée.
 
 ## 10. Décisions restant à prendre
 
@@ -118,3 +118,18 @@ Le prototype devra démontrer les scénarios suivants :
 ## 11. Règle de conception
 
 Ne pas choisir une technologie uniquement parce qu'elle est facile à démarrer. Le choix doit être validé par un prototype qui prouve le multi-utilisateur, les droits d'accès, la synchronisation hors ligne et la prévention des doublons.
+
+
+## 12. Éléments d'interface et règles complémentaires
+
+- La navigation mobile comporte cinq entrées : Accueil, Projets, Production, Messages et Menu.
+- L'accueil privilégie la consultation des projets ; les indicateurs de pilotage viennent ensuite.
+- Le style de référence est industriel (anthracite, orange et blanc), avec thème clair/sombre manuel.
+- L'affectation d'une opération permet de choisir une équipe et plusieurs opérateurs. L'affectation contrôle les droits de saisie, sans restreindre la consultation générale des projets.
+- Le formulaire de production affiche les affectations pertinentes et attribue automatiquement l'auteur connecté.
+- L'historique de production propose des filtres par projet, produit, opération, date, équipe et auteur. Les droits de correction sont contrôlés côté serveur et chaque correction est auditée.
+- Les conversations peuvent être associées à un projet. Les pièces jointes et les documents restent soumis aux permissions.
+- Les comptes rendus de réunion comportent des actions suivies par responsable et statut (À faire, En cours, Terminée).
+- Le centre de notifications prend en charge les catégories configurables par utilisateur et les états lu/non lu.
+- La recherche globale doit appliquer les permissions côté serveur avant de retourner les résultats.
+- L'assistant IA utilise uniquement les données autorisées et ne dispose d'aucune capacité d'écriture.
