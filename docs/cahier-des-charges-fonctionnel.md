@@ -248,7 +248,7 @@ L'accès est contrôlé par rôle. La gestion avancée des versions et les comme
 
 ### 12.1 Messagerie
 
-Messagerie interne permettant les conversations privées et les groupes, avec partage de photos et de documents et notification des nouveaux messages. La création des groupes est réservée à la direction et au responsable de production. Les règles de conservation des messages et de suppression restent à préciser.
+Messagerie interne permettant les conversations privées et les groupes, avec partage de photos et de documents et notification des nouveaux messages. La création des groupes est réservée à la direction et au responsable de production. Les messages et conversations sont conservés sans limite de durée et restent disponibles jusqu'à leur suppression manuelle par un utilisateur habilité. Les règles précises de suppression (qui peut supprimer, quels messages et dans quelles conditions) restent à définir.
 
 ### 12.2 Réunions
 
@@ -340,7 +340,7 @@ Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
 5. **Rapports – décision prise :** génération uniquement à la demande ; aucun rapport périodique n'est envoyé automatiquement.
 6. **Notifications – décision partielle prise :** une nouvelle saisie de production notifie tous les utilisateurs concernés par le projet. Les règles précises permettant d'identifier ces utilisateurs restent à définir.
-7. **Messagerie – décision partielle prise :** seuls la direction et le responsable de production peuvent créer des groupes. Les règles de conservation des messages et de suppression restent à définir.
+7. **Messagerie – décision partielle prise :** seuls la direction et le responsable de production peuvent créer des groupes. La conservation des messages est sans limite de durée, jusqu'à suppression manuelle. Les droits et conditions de suppression restent à définir.
 8. **Hors ligne :** quelles fonctions doivent être intégralement disponibles hors ligne et quelle règle appliquer en cas de conflit ?
 9. **Comptes :** quelles règles pour le PIN, la récupération et la désactivation d'un compte ?
 10. **Assistant IA :** quel fournisseur, quelles limites de coût et quelles règles de confidentialité ?
