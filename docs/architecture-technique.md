@@ -52,6 +52,7 @@ Les règles de synchronisation doivent distinguer les types de données.
 - **Saisies de production :** privilégier des événements immuables et uniques. Une nouvelle tentative d'envoi ne doit jamais créer une deuxième saisie. Le dépassement de la quantité prévue est autorisé, mais l'interface doit afficher un avertissement. La quantité réelle est conservée, le taux d'avancement réel peut dépasser 100 % et la quantité restante affichée ne descend pas sous zéro.
 - **Corrections de production :** autorisées uniquement pour les rôles habilités, avec historique de l'ancienne valeur, de la nouvelle valeur, de l'auteur, de l'heure et du motif.
 - **Données de projet et paramètres :** détecter les modifications concurrentes et éviter qu'une modification plus ancienne écrase silencieusement une modification récente.
+- **Avancement global d'un projet :** calculer la moyenne arithmétique des taux d'avancement de ses produits, chaque produit ayant le même poids. Utiliser les taux réels, qui peuvent dépasser 100 %.
 - **Messagerie :** synchroniser les nouveaux messages lorsque la connexion est disponible.
 
 La stratégie détaillée de résolution des conflits doit être définie et testée avec un prototype avant de retenir définitivement le backend.
