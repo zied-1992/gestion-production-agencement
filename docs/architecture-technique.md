@@ -22,6 +22,7 @@ Le choix du fournisseur backend et du moteur de synchronisation reste ouvert.
 ## 3. Utilisation multi-utilisateurs
 
 - Chaque personne se connecte avec son compte individuel.
+- La création des comptes est réservée à la direction et au responsable de production habilité ; les opérateurs ne peuvent pas s'inscrire eux-mêmes.
 - Plusieurs utilisateurs peuvent consulter et saisir des données au même moment.
 - Les données communes sont centralisées sur le serveur.
 - Les droits sont vérifiés côté serveur, pas uniquement dans l'interface mobile.
