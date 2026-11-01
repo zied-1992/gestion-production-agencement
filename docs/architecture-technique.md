@@ -26,6 +26,8 @@ Le choix du fournisseur backend et du moteur de synchronisation reste ouvert.
 - Plusieurs utilisateurs peuvent consulter et saisir des données au même moment.
 - Les données communes sont centralisées sur le serveur.
 - Les droits sont vérifiés côté serveur, pas uniquement dans l'interface mobile.
+- Les opérateurs peuvent consulter tous les projets de l'entreprise, y compris ceux auxquels leur équipe ne participe pas.
+- Pour les opérateurs, la consultation de tous les projets est en lecture seule : ils ne peuvent pas créer ni modifier les projets, produits, opérations ou affectations. Ils peuvent uniquement enregistrer des saisies de production dans le cadre des droits qui leur sont attribués.
 - L'auteur d'une saisie est identifié automatiquement.
 - L'équipe affectée à une opération reste distincte de l'utilisateur qui a enregistré la saisie.
 - Les connexions depuis plusieurs appareils sont autorisées.
