@@ -242,7 +242,7 @@ Possibilité d'ajouter plusieurs photos et documents à un projet, notamment des
 
 Espace documentaire pour les procédures, modes opératoires, fiches de poste, documents d'organisation et autres documents PDF ou Word.
 
-L'accès est contrôlé par rôle. La gestion avancée des versions et les commentaires sur documents sont exclus de la V1.
+La Direction et le Responsable de production définissent, pour chaque document, les rôles autorisés à le consulter. L'accès est contrôlé par rôle et les documents sensibles ne sont visibles que par les utilisateurs autorisés. La gestion avancée des versions et les commentaires sur documents sont exclus de la V1.
 
 ## 12. Messagerie et réunions
 
