@@ -103,12 +103,12 @@ Pas de priorité, de statut « en retard », de commentaires ni de suivi détail
 Un produit réutilisable peut être créé et ajouté à tout moment. Ses champs sont :
 
 - Nom.
-- Longueur.
-- Largeur.
-- Hauteur.
+- Longueur (cm).
+- Largeur (cm).
+- Hauteur (cm).
 - Quantité à fabriquer dans le projet.
 
-Les unités des dimensions et leur précision devront être normalisées dans la conception technique.
+Le centimètre (cm) est l'unité standard pour toutes les dimensions des produits. Les valeurs décimales sont autorisées si nécessaire.
 
 ### 5.2 Opérations
 
@@ -211,7 +211,7 @@ Les tableaux de bord sont personnalisables : choix des indicateurs, ordre et dis
 
 ## 9. Planning et notifications
 
-Le planning reste simple : dates de début et de livraison prévues des projets et, si nécessaire, dates prévues des opérations. Pas de Gantt ni de mécanisme de retard.
+Le planning reste simple : seules les dates de début et de livraison prévues des projets sont gérées. Aucune date n'est définie au niveau des opérations. Pas de Gantt ni de mécanisme de retard.
 
 Notifications prévues en V1 :
 
