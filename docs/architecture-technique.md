@@ -31,7 +31,7 @@ Le choix du fournisseur backend et du moteur de synchronisation reste ouvert.
 
 ## 4. Fonctionnement hors ligne
 
-L'application doit permettre au minimum la consultation des données préalablement synchronisées et l'enregistrement local des saisies de production.
+L'application doit permettre la consultation des projets et des informations nécessaires à la production déjà synchronisées, ainsi que l'enregistrement local des saisies de production. **Le mode hors ligne est limité à la production (Option B).** Les autres fonctions nécessitant une communication serveur, notamment la messagerie et la gestion administrative, restent indisponibles hors connexion.
 
 Chaque opération locale en attente de synchronisation doit disposer :
 - d'un identifiant unique généré côté appareil ;
@@ -85,6 +85,8 @@ Aucun fournisseur de backend ou de synchronisation n'est encore sélectionné.
 Le prototype devra démontrer les scénarios suivants :
 
 1. Deux téléphones se connectent avec deux comptes différents.
+2. Un opérateur hors ligne peut consulter les projets et les informations de production déjà synchronisées.
+3. Un opérateur hors ligne ne peut pas utiliser les fonctions non prévues pour le mode hors ligne.
 2. Un utilisateur crée une saisie de production en ligne et l'autre la voit après synchronisation.
 3. Un téléphone passe hors ligne et enregistre une saisie.
 4. Le téléphone retrouve la connexion et transmet la saisie une seule fois.
