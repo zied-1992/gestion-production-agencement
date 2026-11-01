@@ -156,7 +156,7 @@ Pour chaque opération, afficher :
 - Quantité restante.
 - Taux d'avancement.
 
-Formule indicative : taux d'avancement = quantité réalisée / quantité prévue × 100. Le comportement en cas de dépassement de la quantité prévue doit être défini avant développement. La quantité réellement déclarée doit rester consultable même si elle dépasse la prévision.
+Formule : taux d'avancement = quantité réalisée / quantité prévue × 100. Le dépassement de la quantité prévue est autorisé avec avertissement visible. L'application conserve la quantité réellement déclarée et affiche le taux réel, même s'il dépasse 100 %. La quantité restante affichée est plafonnée à zéro afin de ne pas présenter une quantité négative. L'avertissement signale clairement que la quantité réalisée dépasse la prévision.
 
 L'historique permet de consulter les saisies par projet, produit, opération, date, équipe et auteur.
 
@@ -334,7 +334,7 @@ Le choix du backend ne doit pas être arrêté avant d'avoir testé le fonctionn
 
 Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 
-1. **Dépassement de quantité :** autoriser une production supérieure à la quantité prévue ? Comment afficher le restant (zéro ou valeur négative) et le taux (plafonné à 100 % ou supérieur) ?
+1. **Dépassement de quantité – décision prise :** dépassement autorisé avec avertissement ; conserver la quantité réelle, afficher le taux réel pouvant dépasser 100 % et plafonner la quantité restante à zéro.
 2. **Avancement global :** quelle pondération utiliser pour agréger les avancements de produits et opérations de natures différentes ?
 3. **Unités :** quelles unités utiliser pour les dimensions des produits et comment gérer les arrondis ?
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
