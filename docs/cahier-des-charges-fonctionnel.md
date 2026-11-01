@@ -230,7 +230,7 @@ Rapports prévus :
 - Rapport d'avancement par projet.
 - Rapport de production par équipe.
 
-Génération automatique périodique et génération manuelle. Formats : PDF et Excel. Personnalisation possible avec logo, nom et couleurs de l'entreprise, ainsi que sélection des tableaux, graphiques et indicateurs. Les horaires d'envoi et les destinataires des rapports automatiques restent à définir.
+Génération uniquement à la demande de l'utilisateur, sans envoi automatique périodique. Formats : PDF et Excel. Personnalisation possible avec logo, nom et couleurs de l'entreprise, ainsi que sélection des tableaux, graphiques et indicateurs. Les horaires d'envoi et les destinataires des rapports automatiques restent à définir.
 
 ## 11. Documents et photos
 
@@ -338,7 +338,7 @@ Les décisions suivantes restent ouvertes et ne doivent pas être supposées :
 2. **Avancement global – décision prise :** moyenne arithmétique des pourcentages d'avancement de chaque produit, avec un poids égal pour chaque produit.
 3. **Unités :** quelles unités utiliser pour les dimensions des produits et comment gérer les arrondis ?
 4. **Planning :** faut-il gérer une date prévue par opération ou seulement les dates du projet ?
-5. **Rapports automatiques :** quels jours/heures et quels destinataires ?
+5. **Rapports – décision prise :** génération uniquement à la demande ; aucun rapport périodique n'est envoyé automatiquement.
 6. **Notifications :** quels rôles reçoivent chaque type de notification ?
 7. **Messagerie :** qui peut créer des groupes et quelles sont les règles de conservation/suppression ?
 8. **Hors ligne :** quelles fonctions doivent être intégralement disponibles hors ligne et quelle règle appliquer en cas de conflit ?
