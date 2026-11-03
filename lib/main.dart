@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 5),
         Text('Client : ${p.client}', style: const TextStyle(color: Colors.black54, fontSize: 12)),
         const SizedBox(height: 12),
-        LinearProgressIndicator(value: value.clamp(0, 1), minHeight: 7, borderRadius: BorderRadius.circular(8), color: orange, backgroundColor: const Color(0xFFE7E9EC)),
+        LinearProgressIndicator(value: value.clamp(0, 1).toDouble(), minHeight: 7, borderRadius: BorderRadius.circular(8), color: orange, backgroundColor: const Color(0xFFE7E9EC)),
         const SizedBox(height: 7),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text('${(value * 100).round()} % réalisé', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
