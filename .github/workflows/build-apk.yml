@@ -29,6 +29,11 @@ jobs:
       - name: Générer la structure Android
         run: flutter create --platforms=android --project-name gestion_production_agencement --org com.agencement .
 
+      - name: Configurer Android API 36
+        run: |
+          sed -i 's/compileSdk = .*/compileSdk = 36/' android/app/build.gradle.kts
+          grep -n 'compileSdk' android/app/build.gradle.kts
+
       - name: Installer les dépendances
         run: flutter pub get
 
