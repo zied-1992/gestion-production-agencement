@@ -1,13 +1,19 @@
 name: gestion_production_agencement
 description: Application locale de gestion de production et projets d'agencement.
 publish_to: 'none'
-version: 1.1.0+2
+version: 1.2.0+3
 environment:
   sdk: '>=3.4.0 <4.0.0'
 dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^2.5.3
+  image_picker: ^1.1.2
+  file_picker: ^8.1.7
+  path_provider: ^2.1.5
+  share_plus: ^10.1.4
+  pdf: ^3.11.1
+  excel: ^4.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
