@@ -1,203 +1,25 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
-void main() => runApp(const AgencementApp());
-
-const charcoal = Color(0xFF20252B);
-const orange = Color(0xFFF28C28);
-const canvas = Color(0xFFF4F5F7);
-
-class AgencementApp extends StatelessWidget {
-  const AgencementApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Gestion Agencement',
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: canvas,
-        colorScheme: ColorScheme.fromSeed(seedColor: orange, primary: charcoal),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: charcoal,
-          foregroundColor: Colors.white,
-          centerTitle: false,
-        ),
-        cardTheme: CardThemeData(
-          color: Colors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class DemoProject {
-  final String name;
-  final String client;
-  final int done;
-  final int total;
-  final String due;
-  const DemoProject(this.name, this.client, this.done, this.total, this.due);
-  double get progress => total == 0 ? 0 : done / total;
-}
-
-const demoProjects = [
-  DemoProject('Aménagement showroom', 'Client Démo A', 18, 30, '15/11/2026'),
-  DemoProject('Mobilier accueil', 'Client Démo B', 8, 20, '22/11/2026'),
-  DemoProject('Rangement bureaux', 'Client Démo C', 42, 50, '28/11/2026'),
-];
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int tab = 0;
-  final List<int> produced = [18, 8, 42];
-
-  @override
-  Widget build(BuildContext context) {
-    final pages = [
-      dashboard(),
-      projectsPage(),
-      productionPage(),
-      const SimplePage(title: 'Messages', icon: Icons.chat_bubble_outline,
-          subtitle: 'Les conversations internes seront disponibles dans la prochaine version.'),
-    ];
-    return Scaffold(
-      appBar: AppBar(
-        title: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('GESTION AGENCEMENT', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 1)),
-          Text('Version de démonstration', style: TextStyle(fontSize: 11, color: Colors.white70)),
-        ]),
-        actions: [IconButton(onPressed: () => showAboutDialog(context: context, applicationName: 'Gestion Agencement', applicationVersion: '0.1.0 - Démo'), icon: const Icon(Icons.info_outline))],
-      ),
-      body: pages[tab],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: tab,
-        onDestinationSelected: (v) => setState(() => tab = v),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'Accueil'),
-          NavigationDestination(icon: Icon(Icons.folder_outlined), selectedIcon: Icon(Icons.folder), label: 'Projets'),
-          NavigationDestination(icon: Icon(Icons.precision_manufacturing_outlined), selectedIcon: Icon(Icons.precision_manufacturing), label: 'Production'),
-          NavigationDestination(icon: Icon(Icons.chat_outlined), selectedIcon: Icon(Icons.chat), label: 'Messages'),
-        ],
-      ),
-    );
-  }
-
-  Widget dashboard() {
-    final total = produced.fold<int>(0, (a, b) => a + b);
-    return ListView(padding: const EdgeInsets.all(16), children: [
-      Container(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(color: charcoal, borderRadius: BorderRadius.circular(18)),
-        child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('BONJOUR 👋', style: TextStyle(color: orange, fontWeight: FontWeight.bold, letterSpacing: 1)),
-          SizedBox(height: 8),
-          Text('Suivez vos projets\nd’agencement.', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
-          Text('Une vue simple de l’activité de production.', style: TextStyle(color: Colors.white70)),
-        ]),
-      ),
-      const SizedBox(height: 16),
-      Row(children: [
-        Expanded(child: metric('Projets actifs', '3', Icons.work_outline)),
-        const SizedBox(width: 10),
-        Expanded(child: metric('Unités produites', '$total', Icons.factory_outlined)),
-      ]),
-      const SizedBox(height: 20),
-      sectionTitle('Projets à suivre', 'Voir tout', () => setState(() => tab = 1)),
-      ...List.generate(demoProjects.length, (i) => projectCard(i)),
-      const SizedBox(height: 12),
-      const Text('Données fictives — démonstration uniquement', style: TextStyle(color: Colors.black54, fontSize: 11), textAlign: TextAlign.center),
-    ]);
-  }
-
-  Widget projectsPage() => ListView(padding: const EdgeInsets.all(16), children: [
-    const Text('Tous les projets', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-    const SizedBox(height: 4),
-    const Text('Exemples fictifs pour la présentation'),
-    const SizedBox(height: 12),
-    ...List.generate(demoProjects.length, (i) => projectCard(i)),
-  ]);
-
-  Widget productionPage() => ListView(padding: const EdgeInsets.all(16), children: [
-    const Text('Suivi de production', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-    const Text('Enregistrez une quantité de démonstration.'),
-    const SizedBox(height: 16),
-    ...List.generate(demoProjects.length, (i) => Card(child: ListTile(
-      leading: const CircleAvatar(backgroundColor: Color(0xFFFFE8D0), child: Icon(Icons.precision_manufacturing, color: charcoal)),
-      title: Text(demoProjects[i].name),
-      subtitle: Text('${produced[i]} / ${demoProjects[i].total} unités'),
-      trailing: IconButton(icon: const Icon(Icons.add_circle, color: orange, size: 30), onPressed: () => addProduction(i)),
-    ))),
-    const SizedBox(height: 12),
-    const Text('Les quantités sont enregistrées uniquement dans cette démonstration locale.', style: TextStyle(color: Colors.black54, fontSize: 12)),
-  ]);
-
-  Widget projectCard(int i) {
-    final p = demoProjects[i];
-    final value = produced[i] / p.total;
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Expanded(child: Text(p.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
-          Container(padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5), decoration: BoxDecoration(color: const Color(0xFFFFE8D0), borderRadius: BorderRadius.circular(20)), child: const Text('En cours', style: TextStyle(fontSize: 11, color: charcoal))),
-        ]),
-        const SizedBox(height: 5),
-        Text('Client : ${p.client}', style: const TextStyle(color: Colors.black54, fontSize: 12)),
-        const SizedBox(height: 12),
-        LinearProgressIndicator(value: value.clamp(0, 1).toDouble(), minHeight: 7, borderRadius: BorderRadius.circular(8), color: orange, backgroundColor: const Color(0xFFE7E9EC)),
-        const SizedBox(height: 7),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('${(value * 100).round()} % réalisé', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12)),
-          Text('Livraison : ${p.due}', style: const TextStyle(color: Colors.black54, fontSize: 11)),
-        ]),
-      ])),
-    );
-  }
-
-  Widget metric(String label, String value, IconData icon) => Card(child: Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    Icon(icon, color: orange), const SizedBox(height: 10),
-    Text(value, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: charcoal)),
-    Text(label, style: const TextStyle(color: Colors.black54, fontSize: 12)),
-  ])));
-
-  Widget sectionTitle(String title, String action, VoidCallback onTap) => Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-    TextButton(onPressed: onTap, child: Text(action)),
-  ]);
-
-  Future<void> addProduction(int index) async {
-    final controller = TextEditingController(text: '1');
-    final amount = await showDialog<int>(context: context, builder: (context) => AlertDialog(
-      title: const Text('Ajouter une production'),
-      content: TextField(controller: controller, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: 'Quantité produite', suffixText: 'unités')),
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Annuler')),
-        FilledButton(onPressed: () => Navigator.pop(context, int.tryParse(controller.text)), child: const Text('Enregistrer')),
-      ],
-    ));
-    if (amount != null && amount > 0) setState(() => produced[index] += amount);
-  }
-}
-
-class SimplePage extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final String subtitle;
-  const SimplePage({super.key, required this.title, required this.icon, required this.subtitle});
-  @override
-  Widget build(BuildContext context) => Center(child: Padding(padding: const EdgeInsets.all(28), child: Column(mainAxisSize: MainAxisSize.min, children: [
-    Icon(icon, size: 56, color: orange), const SizedBox(height: 16),
-    Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-    const SizedBox(height: 8), Text(subtitle, textAlign: TextAlign.center, style: const TextStyle(color: Colors.black54)),
-  ])));
-}
+import 'package:shared_preferences/shared_preferences.dart';
+const orange=Color(0xFFF28C28), dark=Color(0xFF20252B);
+void main()=>runApp(const App());
+class App extends StatelessWidget{const App({super.key});Widget build(BuildContext c)=>MaterialApp(debugShowCheckedModeBanner:false,title:'Gestion Agencement',theme:ThemeData(useMaterial3:true,colorScheme:ColorScheme.fromSeed(seedColor:orange),appBarTheme:const AppBarTheme(backgroundColor:dark,foregroundColor:Colors.white)),home:const Shell());}
+class DB{static final DB I=DB._();DB._();List<Map<String,dynamic>> projects=[],logs=[],meetings=[];Future<void> load()async{final p=await SharedPreferences.getInstance();projects=_get(p,'projects');logs=_get(p,'logs');meetings=_get(p,'meetings');}List<Map<String,dynamic>> _get(SharedPreferences p,String k)=>(jsonDecode(p.getString(k)??'[]') as List).map((e)=>Map<String,dynamic>.from(e)).toList();Future<void> save()async{final p=await SharedPreferences.getInstance();await p.setString('projects',jsonEncode(projects));await p.setString('logs',jsonEncode(logs));await p.setString('meetings',jsonEncode(meetings));}}
+double progress(Map p){final a=p['products'] as List? ?? [];if(a.isEmpty)return 0;return a.map<double>((x)=>(x['qty'] as num)==0?0:(x['done'] as num)/(x['qty'] as num)).fold(0,(a,b)=>a+b)/a.length;}
+class Shell extends StatefulWidget{const Shell({super.key});State<Shell> createState()=>_Shell();}
+class _Shell extends State<Shell>{int tab=0;void initState(){super.initState();DB.I.load().then((_)=>mounted?setState((){}):null);}Widget build(BuildContext c){final pages=[home(),Projects(changed:refresh),Production(changed:refresh),Meetings(changed:refresh),const Reports()];return Scaffold(appBar:AppBar(title:const Text('GESTION AGENCEMENT')),body:pages[tab],bottomNavigationBar:NavigationBar(selectedIndex:tab,onDestinationSelected:(v)=>setState(()=>tab=v),destinations:const [NavigationDestination(icon:Icon(Icons.dashboard),label:'Accueil'),NavigationDestination(icon:Icon(Icons.folder),label:'Projets'),NavigationDestination(icon:Icon(Icons.factory),label:'Production'),NavigationDestination(icon:Icon(Icons.groups),label:'Réunions'),NavigationDestination(icon:Icon(Icons.assessment),label:'Rapports')]));}void refresh()=>setState((){});Widget home(){final d=DB.I;final av=d.projects.isEmpty?0:d.projects.map(progress).fold<double>(0,(a,b)=>a+b)/d.projects.length;return ListView(padding:const EdgeInsets.all(16),children:[Container(padding:const EdgeInsets.all(20),decoration:BoxDecoration(color:dark,borderRadius:BorderRadius.circular(16)),child:const Text('Pilotez vos projets et votre production',style:TextStyle(color:Colors.white,fontSize:23,fontWeight:FontWeight.bold))),const SizedBox(height:12),Wrap(spacing:8,children:[metric('Projets',d.projects.length),metric('Saisies',d.logs.length),metric('Avancement moyen',(av*100).toStringAsFixed(0)+' %')]),const SizedBox(height:16),const Text('Projets récents',style:TextStyle(fontSize:18,fontWeight:FontWeight.bold)),if(d.projects.isEmpty)const Padding(padding:EdgeInsets.all(24),child:Text('Aucun projet. Ouvrez Projets puis Nouveau projet.')),...d.projects.reversed.take(5).map((p)=>tile(c,p))]);}Widget metric(String s,Object v)=>Card(child:Padding(padding:const EdgeInsets.all(14),child:Column(children:[Text(v.toString(),style:const TextStyle(fontSize:24,fontWeight:FontWeight.bold)),Text(s)])));Widget tile(BuildContext c,Map<String,dynamic> p)=>Card(child:ListTile(title:Text(p['name']),subtitle:Text(p['client']+' • '+p['reference']+' • '+(progress(p)*100).toStringAsFixed(0)+' %'),trailing:const Icon(Icons.chevron_right),onTap:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>Detail(p,changed:refresh)))));}
+class Projects extends StatefulWidget{final VoidCallback changed;const Projects({super.key,required this.changed});State<Projects> createState()=>_Projects();}
+class _Projects extends State<Projects>{String q='';Widget build(BuildContext c)=>Scaffold(body:Column(children:[Padding(padding:const EdgeInsets.all(12),child:TextField(decoration:const InputDecoration(prefixIcon:Icon(Icons.search),hintText:'Projet, client, référence',border:OutlineInputBorder()),onChanged:(v)=>setState(()=>q=v))),Expanded(child:ListView(children:DB.I.projects.where((p)=>(p['name']+' '+p['client']+' '+p['reference']).toLowerCase().contains(q.toLowerCase())).map((p)=>ListTile(title:Text(p['name']),subtitle:Text(p['client']+' • '+(progress(p)*100).toStringAsFixed(0)+' %'),onTap:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>Detail(p,changed:(){setState((){});widget.changed();}))))).toList()))]),floatingActionButton:FloatingActionButton.extended(backgroundColor:orange,onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>ProjectForm(saved:(){setState((){});widget.changed();}))),icon:const Icon(Icons.add),label:const Text('Nouveau projet')));}
+class ProjectForm extends StatefulWidget{final VoidCallback saved;const ProjectForm({super.key,required this.saved});State<ProjectForm> createState()=>_ProjectForm();}
+class _ProjectForm extends State<ProjectForm>{final name=TextEditingController(),client=TextEditingController(),ref=TextEditingController();final products=<Map<String,dynamic>>[];String status='En cours';DateTime start=DateTime.now(),due=DateTime.now().add(const Duration(days:30));void initState(){super.initState();ref.text='AG-'+(DateTime.now().millisecondsSinceEpoch%100000).toString();}
+Future<void> addProduct()async{final n=TextEditingController(),qty=TextEditingController(text:'1'),l=TextEditingController(),w=TextEditingController(),h=TextEditingController();String unit='pièce';final r=await showDialog<Map<String,dynamic>>(context:context,builder:(x)=>StatefulBuilder(builder:(x,sd)=>AlertDialog(title:const Text('Ajouter un ouvrage'),content:SingleChildScrollView(child:Column(children:[TextField(controller:n,decoration:const InputDecoration(labelText:'Désignation')),TextField(controller:qty,keyboardType:TextInputType.number,decoration:const InputDecoration(labelText:'Quantité prévue')),Row(children:[Expanded(child:TextField(controller:l,decoration:const InputDecoration(labelText:'L cm'))),Expanded(child:TextField(controller:w,decoration:const InputDecoration(labelText:'l cm'))),Expanded(child:TextField(controller:h,decoration:const InputDecoration(labelText:'H cm')))]),DropdownButtonFormField<String>(value:unit,items:['pièce','ml','m²','lot','kg','personnalisée'].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(),onChanged:(v)=>sd(()=>unit=v!))])),actions:[TextButton(onPressed:()=>Navigator.pop(x),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(x,{'name':n.text,'qty':double.tryParse(qty.text)??1,'done':0.0,'unit':unit,'l':double.tryParse(l.text)??0,'w':double.tryParse(w.text)??0,'h':double.tryParse(h.text)??0,'operations':['Découpe MDF','Découpe fer','Soudure','Assemblage MDF + fer','Finition','Emballage','Installation']}),child:const Text('Ajouter'))])));if(r!=null&&r['name'].toString().trim().isNotEmpty)setState(()=>products.add(r));}
+Future<void> save()async{if(name.text.trim().isEmpty||client.text.trim().isEmpty||products.isEmpty){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:Text('Nom, client et un produit sont obligatoires.')));return;}DB.I.projects.add({'name':name.text,'client':client.text,'reference':ref.text,'start':start.toIso8601String(),'due':due.toIso8601String(),'status':status,'products':products,'created':DateTime.now().toIso8601String()});await DB.I.save();widget.saved();if(mounted)Navigator.pop(context);}
+Widget build(BuildContext c)=>Scaffold(appBar:AppBar(title:const Text('Nouveau projet')),body:ListView(padding:const EdgeInsets.all(16),children:[TextField(controller:ref,decoration:const InputDecoration(labelText:'Référence')),TextField(controller:name,decoration:const InputDecoration(labelText:'Nom du projet *')),TextField(controller:client,decoration:const InputDecoration(labelText:'Client *')),ListTile(title:const Text('Date de début'),subtitle:Text(start.toString().substring(0,10)),onTap:()async{final d=await showDatePicker(context:context,initialDate:start,firstDate:DateTime(2020),lastDate:DateTime(2100));if(d!=null)setState(()=>start=d);}),ListTile(title:const Text('Livraison prévue'),subtitle:Text(due.toString().substring(0,10)),onTap:()async{final d=await showDatePicker(context:context,initialDate:due,firstDate:DateTime(2020),lastDate:DateTime(2100));if(d!=null)setState(()=>due=d);}),DropdownButtonFormField<String>(value:status,items:['En cours','Terminé','Annulé'].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(),onChanged:(v)=>setState(()=>status=v!)),Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children:[const Text('Produits / ouvrages',style:TextStyle(fontSize:18,fontWeight:FontWeight.bold)),TextButton.icon(onPressed:addProduct,icon:const Icon(Icons.add),label:const Text('Ajouter'))]),...products.map((p)=>ListTile(title:Text(p['name']),subtitle:Text(p['qty'].toString()+' '+p['unit']+' • '+p['l'].toString()+'×'+p['w'].toString()+'×'+p['h'].toString()+' cm'))),FilledButton.icon(onPressed:save,icon:const Icon(Icons.save),label:const Text('Enregistrer le projet'))]));}
+class Detail extends StatelessWidget{final Map<String,dynamic> p;final VoidCallback changed;const Detail(this.p,{super.key,required this.changed});Widget build(BuildContext c)=>Scaffold(appBar:AppBar(title:Text(p['name'])),body:ListView(padding:const EdgeInsets.all(16),children:[Text('Client : '+p['client']),Text('Référence : '+p['reference']),Text('Livraison : '+p['due']),LinearProgressIndicator(value:progress(p).clamp(0,1),color:orange),Text('Avancement '+(progress(p)*100).toStringAsFixed(1)+' %'),const SizedBox(height:12),const Text('Ouvrages',style:TextStyle(fontSize:18,fontWeight:FontWeight.bold)),...(p['products'] as List).map((x)=>ListTile(title:Text(x['name']),subtitle:Text('Prévu '+x['qty'].toString()+' • Produit '+x['done'].toString()+' • Reste '+((x['qty'] as num)-(x['done'] as num)).clamp(0,double.infinity).toString())))]));}
+class Production extends StatefulWidget{final VoidCallback changed;const Production({super.key,required this.changed});State<Production> createState()=>_Production();}
+class _Production extends State<Production>{Future<void> add()async{final s=DB.I;if(s.projects.isEmpty)return;Map<String,dynamic> p=s.projects.first,x=(s.projects.first['products'] as List).first;String op=(x['operations'] as List).first;final qty=TextEditingController(text:'1');final amount=await showDialog<double>(context:context,builder:(c)=>StatefulBuilder(builder:(c,sd)=>AlertDialog(title:const Text('Saisie de production'),content:Column(mainAxisSize:MainAxisSize.min,children:[DropdownButtonFormField<Map<String,dynamic>>(value:p,items:s.projects.map((e)=>DropdownMenuItem(value:e,child:Text(e['name']))).toList(),onChanged:(v)=>sd(()=>{p=v!,x=(p['products'] as List).first,op=(x['operations'] as List).first})),DropdownButtonFormField<Map<String,dynamic>>(value:x,items:(p['products'] as List).cast<Map<String,dynamic>>().map((e)=>DropdownMenuItem(value:e,child:Text(e['name']))).toList(),onChanged:(v)=>sd(()=>{x=v!,op=(x['operations'] as List).first})),DropdownButtonFormField<String>(value:op,items:(x['operations'] as List).map<DropdownMenuItem<String>>((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(),onChanged:(v)=>sd(()=>op=v!)),TextField(controller:qty,keyboardType:TextInputType.number,decoration:const InputDecoration(labelText:'Quantité produite'))]),actions:[TextButton(onPressed:()=>Navigator.pop(c),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(c,double.tryParse(qty.text)),child:const Text('Enregistrer'))])));if(amount==null||amount<=0)return;x['done']=(x['done'] as num)+amount;s.logs.add({'project':p['name'],'product':x['name'],'operation':op,'qty':amount,'date':DateTime.now().toIso8601String()});await s.save();setState((){});widget.changed();}
+Widget build(BuildContext c)=>Scaffold(floatingActionButton:FloatingActionButton.extended(backgroundColor:orange,onPressed:add,icon:const Icon(Icons.add),label:const Text('Saisir production')),body:ListView(padding:const EdgeInsets.all(16),children:[Text('Historique : '+DB.I.logs.length.toString()+' saisies',style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold)),...DB.I.logs.reversed.map((e)=>ListTile(leading:const Icon(Icons.factory,color:orange),title:Text(e['product']+' • '+e['qty'].toString()),subtitle:Text(e['project']+' / '+e['operation'])))]));}
+class Meetings extends StatefulWidget{final VoidCallback changed;const Meetings({super.key,required this.changed});State<Meetings> createState()=>_Meetings();}
+class _Meetings extends State<Meetings>{Future<void> add()async{final t=TextEditingController(),people=TextEditingController(),dec=TextEditingController(),act=TextEditingController(),who=TextEditingController();final ok=await showDialog<bool>(context:context,builder:(c)=>AlertDialog(title:const Text('Compte rendu'),content:SingleChildScrollView(child:Column(children:[TextField(controller:t,decoration:const InputDecoration(labelText:'Objet')),TextField(controller:people,decoration:const InputDecoration(labelText:'Participants')),TextField(controller:dec,maxLines:3,decoration:const InputDecoration(labelText:'Décisions')),TextField(controller:act,maxLines:3,decoration:const InputDecoration(labelText:'Actions')),TextField(controller:who,decoration:const InputDecoration(labelText:'Responsable'))])),actions:[TextButton(onPressed:()=>Navigator.pop(c,false),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(c,true),child:const Text('Enregistrer'))]));if(ok==true){DB.I.meetings.add({'title':t.text,'participants':people.text,'decisions':dec.text,'actions':act.text,'responsible':who.text,'date':DateTime.now().toIso8601String()});await DB.I.save();setState((){});}}
+Widget build(BuildContext c)=>Scaffold(floatingActionButton:FloatingActionButton.extended(backgroundColor:orange,onPressed:add,icon:const Icon(Icons.add),label:const Text('Nouveau compte rendu')),body:ListView(children:[if(DB.I.meetings.isEmpty)const Padding(padding:EdgeInsets.all(24),child:Text('Aucun compte rendu')), ...DB.I.meetings.reversed.map((m)=>ExpansionTile(title:Text(m['title']),subtitle:Text(m['date'].toString().substring(0,10)),children:[ListTile(title:const Text('Participants'),subtitle:Text(m['participants'])),ListTile(title:const Text('Décisions'),subtitle:Text(m['decisions'])),ListTile(title:const Text('Actions'),subtitle:Text(m['actions']+' — Responsable : '+m['responsible']))]))]));}
+class Reports extends StatelessWidget{const Reports({super.key});Widget build(BuildContext c)=>ListView(padding:const EdgeInsets.all(16),children:[const Text('Rapports',style:TextStyle(fontSize:22,fontWeight:FontWeight.bold)),const Text('Données enregistrées localement sur ce téléphone.'),FilledButton.icon(onPressed:(){final b=StringBuffer('Projet;Client;Référence;Avancement\n');for(final p in DB.I.projects){b.writeln(p['name']+';'+p['client']+';'+p['reference']+';'+(progress(p)*100).toStringAsFixed(1));}Clipboard.setData(ClipboardData(text:b.toString()));ScaffoldMessenger.of(c).showSnackBar(const SnackBar(content:Text('Tableau CSV copié. Collez-le dans Excel.')));},icon:const Icon(Icons.copy),label:const Text('Copier le rapport CSV')),const SizedBox(height:12),const Text('Cette version ne contient ni messagerie ni synchronisation. Les photos, documents, exports PDF/XLSX, équipes et corrections avec historique seront intégrés avant de considérer l’application complète.')]);}
