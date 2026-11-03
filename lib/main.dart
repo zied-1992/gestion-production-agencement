@@ -72,13 +72,179 @@ class _Production extends State<Production>{
   setState((){});widget.changed();
  }
  Future<void> correct(Map<String,dynamic> log)async{final ctrl=TextEditingController(text:log['qty'].toString()),reason=TextEditingController();final ok=await showDialog<bool>(context:context,builder:(c)=>AlertDialog(title:const Text('Corriger la saisie'),content:Column(mainAxisSize:MainAxisSize.min,children:[TextField(controller:ctrl,keyboardType:TextInputType.number,decoration:const InputDecoration(labelText:'Nouvelle quantité')),TextField(controller:reason,decoration:const InputDecoration(labelText:'Motif obligatoire'))]),actions:[TextButton(onPressed:()=>Navigator.pop(c,false),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(c,true),child:const Text('Confirmer'))]));final n=double.tryParse(ctrl.text);if(ok!=true||n==null||n<0||reason.text.trim().isEmpty)return;final p=Store.I.projects.firstWhere((p)=>p['name']==log['project']);final x=(p['products'] as List).firstWhere((x)=>x['name']==log['product']);final oldQty=log['qty'] as num;x['done']=(x['done'] as num)-oldQty+n;log['correction']={'ancienne_quantite':oldQty,'nouvelle_quantite':n,'motif':reason.text,'date':DateTime.now().toIso8601String()};log['qty']=n;await Store.I.save();setState((){});widget.changed();}
- Widget build(BuildContext c)=>Scaffold(floatingActionButton:FloatingActionButton.extended(backgroundColor:orange,onPressed:add,icon:const Icon(Icons.add),label:const Text('Saisir production')),body:ListView(padding:const EdgeInsets.all(12),children:[Text('Historique : ${Store.I.logs.length} saisies',style:const TextStyle(fontSize:20,fontWeight:FontWeight.bold)),...Store.I.logs.reversed.map((e)=>Card(child:ListTile(title:Text('${e['product']} • ${e['qty']}'),subtitle:Text('${e['project']} / ${e['operation']} • ${e['team']} • ${day(e['date'])}${e['correction']==null?'':' • corrigé : ${e['correction']['motif']}'}'),trailing:IconButton(icon:const Icon(Icons.edit_note),tooltip:'Corriger avec motif',onPressed:()=>correct(e)))))]));}}
-class Meetings extends StatefulWidget{final VoidCallback changed;const Meetings({super.key,required this.changed});State<Meetings> createState()=>_Meetings();}
-class _Meetings extends State<Meetings>{Future<void> add()async{final t=TextEditingController(),people=TextEditingController(),dec=TextEditingController(),act=TextEditingController(),who=TextEditingController();final ok=await showDialog<bool>(context:context,builder:(c)=>AlertDialog(title:const Text('Compte rendu de réunion'),content:SingleChildScrollView(child:Column(children:[TextField(controller:t,decoration:const InputDecoration(labelText:'Objet')),TextField(controller:people,decoration:const InputDecoration(labelText:'Participants')),TextField(controller:dec,maxLines:3,decoration:const InputDecoration(labelText:'Décisions')),TextField(controller:act,maxLines:3,decoration:const InputDecoration(labelText:'Actions à réaliser')),TextField(controller:who,decoration:const InputDecoration(labelText:'Responsable'))])),actions:[TextButton(onPressed:()=>Navigator.pop(c,false),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(c,true),child:const Text('Enregistrer'))]));if(ok==true){Store.I.meetings.add({'title':t.text,'participants':people.text,'decisions':dec.text,'actions':act.text,'responsible':who.text,'status':'À faire','date':DateTime.now().toIso8601String()});await Store.I.save();setState((){});}}
- Widget build(BuildContext c)=>Scaffold(floatingActionButton:FloatingActionButton.extended(backgroundColor:orange,onPressed:add,icon:const Icon(Icons.add),label:const Text('Nouveau compte rendu')),body:ListView(children:[if(Store.I.meetings.isEmpty)const Padding(padding:EdgeInsets.all(24),child:Text('Aucun compte rendu')), ...Store.I.meetings.reversed.map((m)=>ExpansionTile(title:Text(m['title']),subtitle:Text('${day(m['date'])} • ${m['status']}'),children:[ListTile(title:const Text('Participants'),subtitle:Text(m['participants'])),ListTile(title:const Text('Décisions'),subtitle:Text(m['decisions'])),ListTile(title:const Text('Actions / responsable'),subtitle:Text('${m['actions']} — ${m['responsible']}')),Padding(padding:const EdgeInsets.all(12),child:DropdownButtonFormField<String>(value:m['status'],items:['À faire','En cours','Terminée'].map((e)=>DropdownMenuItem(value:e,child:Text(e))).toList(),onChanged:(v)async{m['status']=v;await Store.I.save();setState((){});} ))]))]));}}
-class Teams extends StatefulWidget{final VoidCallback changed;const Teams({super.key,required this.changed});State<Teams> createState()=>_Teams();}
-class _Teams extends State<Teams>{Future<void> add([Map<String,dynamic>? old])async{final t=TextEditingController(text:old?['name']??'');final ok=await showDialog<bool>(context:context,builder:(c)=>AlertDialog(title:Text(old==null?'Nouvelle équipe':'Modifier équipe'),content:TextField(controller:t,decoration:const InputDecoration(labelText:'Nom de l’équipe')),actions:[TextButton(onPressed:()=>Navigator.pop(c,false),child:const Text('Annuler')),FilledButton(onPressed:()=>Navigator.pop(c,true),child:const Text('Enregistrer'))]));if(ok==true&&t.text.trim().isNotEmpty){if(old==null)Store.I.teams.add({'name':t.text.trim()});else old['name']=t.text.trim();await Store.I.save();setState((){});}}
- Widget build(BuildContext c)=>Scaffold(floatingActionButton:FloatingActionButton.extended(onPressed:()=>add(),icon:const Icon(Icons.add),label:const Text('Ajouter équipe')),body:ListView(children:Store.I.teams.map((t)=>ListTile(leading:const Icon(Icons.groups),title:Text(t['name']),onTap:()=>add(t),trailing:IconButton(icon:const Icon(Icons.delete_outline),onPressed:()async{Store.I.teams.remove(t);await Store.I.save();setState((){});}))).toList()));}}
+  @override
+  Widget build(BuildContext c) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: orange,
+        onPressed: add,
+        icon: const Icon(Icons.add),
+        label: const Text('Saisir production'),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(12),
+        children: [
+          Text('Historique : ${Store.I.logs.length} saisies',
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ...Store.I.logs.reversed.map((e) => Card(
+                child: ListTile(
+                  title: Text('${e['product']} • ${e['qty']}'),
+                  subtitle: Text(
+                    "${e['project']} / ${e['operation']} • ${e['team']} • ${day(e['date'])}${e['correction'] == null ? '' : " • corrigé : ${e['correction']['motif']}"}",
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.edit_note),
+                    tooltip: 'Corriger avec motif',
+                    onPressed: () => correct(e),
+                  ),
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+}
+class Meetings extends StatefulWidget {
+  final VoidCallback changed;
+  const Meetings({super.key, required this.changed});
+  @override
+  State<Meetings> createState() => _Meetings();
+}
+
+class _Meetings extends State<Meetings> {
+  Future<void> add() async {
+    final t = TextEditingController();
+    final people = TextEditingController();
+    final dec = TextEditingController();
+    final act = TextEditingController();
+    final who = TextEditingController();
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: const Text('Compte rendu de réunion'),
+        content: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(controller: t, decoration: const InputDecoration(labelText: 'Objet')),
+              TextField(controller: people, decoration: const InputDecoration(labelText: 'Participants')),
+              TextField(controller: dec, maxLines: 3, decoration: const InputDecoration(labelText: 'Décisions')),
+              TextField(controller: act, maxLines: 3, decoration: const InputDecoration(labelText: 'Actions à réaliser')),
+              TextField(controller: who, decoration: const InputDecoration(labelText: 'Responsable')),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Annuler')),
+          FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('Enregistrer')),
+        ],
+      ),
+    );
+    if (ok == true) {
+      Store.I.meetings.add({
+        'title': t.text, 'participants': people.text, 'decisions': dec.text,
+        'actions': act.text, 'responsible': who.text, 'status': 'À faire',
+        'date': DateTime.now().toIso8601String(),
+      });
+      await Store.I.save();
+      if (mounted) setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext c) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: orange, onPressed: add, icon: const Icon(Icons.add),
+        label: const Text('Nouveau compte rendu'),
+      ),
+      body: ListView(
+        children: [
+          if (Store.I.meetings.isEmpty)
+            const Padding(padding: EdgeInsets.all(24), child: Text('Aucun compte rendu')),
+          ...Store.I.meetings.reversed.map((m) => ExpansionTile(
+            title: Text(m['title']),
+            subtitle: Text('${day(m['date'])} • ${m['status']}'),
+            children: [
+              ListTile(title: const Text('Participants'), subtitle: Text(m['participants'])),
+              ListTile(title: const Text('Décisions'), subtitle: Text(m['decisions'])),
+              ListTile(title: const Text('Actions / responsable'), subtitle: Text('${m['actions']} — ${m['responsible']}')),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: DropdownButtonFormField<String>(
+                  value: m['status'],
+                  items: ['À faire', 'En cours', 'Terminée'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                  onChanged: (v) async {
+                    if (v == null) return;
+                    m['status'] = v;
+                    await Store.I.save();
+                    if (mounted) setState(() {});
+                  },
+                ),
+              ),
+            ],
+          )),
+        ],
+      ),
+    );
+  }
+}
+
+class Teams extends StatefulWidget {
+  final VoidCallback changed;
+  const Teams({super.key, required this.changed});
+  @override
+  State<Teams> createState() => _Teams();
+}
+
+class _Teams extends State<Teams> {
+  Future<void> add([Map<String, dynamic>? old]) async {
+    final t = TextEditingController(text: old?['name'] ?? '');
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text(old == null ? 'Nouvelle équipe' : 'Modifier équipe'),
+        content: TextField(controller: t, decoration: const InputDecoration(labelText: 'Nom de l’équipe')),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('Annuler')),
+          FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('Enregistrer')),
+        ],
+      ),
+    );
+    if (ok == true && t.text.trim().isNotEmpty) {
+      if (old == null) {
+        Store.I.teams.add({'name': t.text.trim()});
+      } else {
+        old['name'] = t.text.trim();
+      }
+      await Store.I.save();
+      if (mounted) setState(() {});
+    }
+  }
+
+  @override
+  Widget build(BuildContext c) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => add(), icon: const Icon(Icons.add), label: const Text('Ajouter équipe'),
+      ),
+      body: ListView(
+        children: Store.I.teams.map((t) => ListTile(
+          leading: const Icon(Icons.groups),
+          title: Text(t['name']),
+          onTap: () => add(t),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete_outline),
+            onPressed: () async {
+              Store.I.teams.remove(t);
+              await Store.I.save();
+              if (mounted) setState(() {});
+            },
+          ),
+        )).toList(),
+      ),
+    );
+  }
+}
 class Reports extends StatelessWidget{final VoidCallback changed;const Reports({super.key,required this.changed});
  Future<void> csv(BuildContext c)async{final b=StringBuffer('Projet;Client;Référence;Statut;Avancement\n');for(final p in Store.I.projects){b.writeln('${p['name']};${p['client']};${p['reference']};${p['status']};${(progress(p)*100).toStringAsFixed(1)}');}final path=await saveBytes(utf8.encode(b.toString()),'rapport_projets.csv');await Share.shareXFiles([XFile(path)]);}
  Future<void> pdfReport(BuildContext c)async{final doc=pw.Document();doc.addPage(pw.MultiPage(pageFormat:PdfPageFormat.a4,build:(ctx)=>[pw.Header(level:0,child:pw.Text('Rapport de production - Agencement')),pw.TableHelper.fromTextArray(headers:['Projet','Client','Statut','Avancement'],data:Store.I.projects.map((p)=>[p['name'],p['client'],p['status'],'${(progress(p)*100).toStringAsFixed(1)} %']).toList()),pw.SizedBox(height:20),pw.Text('Historique production : ${Store.I.logs.length} saisies')]));final path=await saveBytes(await doc.save(),'rapport_agencement.pdf');await Share.shareXFiles([XFile(path)]);}
